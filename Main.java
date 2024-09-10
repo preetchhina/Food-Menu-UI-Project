@@ -1,47 +1,51 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class MenuCreationUI extends Application {
+public class FoodMenuUIProject2024 extends Application {
+
+    // Arrays for Menu Items
+    String[] itemNames = new String[100];
+    double[] itemPrices = new double[100];
+    int[] itemCalories = new int[100];
+    int itemCount = 0;
+
+    // Budget and calorie tracking
+    double budget = 0.0;
+    int calorieLimit = 0;
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Menu Creation");
-
-        // Labels and Input Fields
-        Label nameLabel = new Label("Item Name:");
-        TextField nameField = new TextField();
-        Label priceLabel = new Label("Price:");
-        TextField priceField = new TextField();
-        Label caloriesLabel = new Label("Calories:");
-        TextField caloriesField = new TextField();
-
-        Button addButton = new Button("Add Item");
+        primaryStage.setTitle("Food Menu UI Project 2024");
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.add(nameLabel, 0, 0);
-        gridPane.add(nameField, 1, 0);
-        gridPane.add(priceLabel, 0, 1);
-        gridPane.add(priceField, 1, 1);
-        gridPane.add(caloriesLabel, 0, 2);
-        gridPane.add(caloriesField, 1, 2);
-        gridPane.add(addButton, 1, 3);
 
-        addButton.setOnAction(e -> {
-            String name = nameField.getText();
-            double price = Double.parseDouble(priceField.getText());
-            int calories = Integer.parseInt(caloriesField.getText());
-            // Save the item (store it in a data structure like an array or list)
-            System.out.println("Added: " + name + " | Price: " + price + " | Calories: " + calories);
-        });
+        // Menu creation UI
+        MenuCreationUI menuCreationUI = new MenuCreationUI(this);
+        menuCreationUI.addMenuCreationSection(gridPane);
 
-        Scene scene = new Scene(gridPane, 400, 200);
+        // Budget tracking UI
+        BudgetTrackingUI budgetTrackingUI = new BudgetTrackingUI(this);
+        budgetTrackingUI.addBudgetTrackingSection(gridPane);
+
+        // Calorie tracking UI
+        CalorieTrackingUI calorieTrackingUI = new CalorieTrackingUI(this);
+        calorieTrackingUI.addCalorieTrackingSection(gridPane);
+
+        // Recipe system UI
+        RecipeSystemUI recipeSystemUI = new RecipeSystemUI(this);
+        recipeSystemUI.addRecipeSystemSection(gridPane);
+
+        // Meal planning UI
+        MealPlanningUI mealPlanningUI = new MealPlanningUI(this);
+        mealPlanningUI.addMealPlanningSection(gridPane);
+
+        // Set up the Scene and show the window
+        Scene scene = new Scene(gridPane, 600, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
