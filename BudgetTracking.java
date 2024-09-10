@@ -1,53 +1,28 @@
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+Label budgetLabel = new Label("Budget:");
+TextField budgetField = new TextField();
+Label totalCostLabel = new Label("Total Cost: 0");
+double[] totalCost = {0.0};
 
-public class MenuCreationUI extends Application {
+Button checkBudgetButton = new Button("Check Budget");
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Menu Creation");
+gridPane.add(budgetLabel, 0, 4);
+gridPane.add(budgetField, 1, 4);
+gridPane.add(totalCostLabel, 0, 5);
+gridPane.add(checkBudgetButton, 1, 5);
 
-        // Labels and Input Fields
-        Label nameLabel = new Label("Item Name:");
-        TextField nameField = new TextField();
-        Label priceLabel = new Label("Price:");
-        TextField priceField = new TextField();
-        Label caloriesLabel = new Label("Calories:");
-        TextField caloriesField = new TextField();
+addButton.setOnAction(e -> {
+    String name = nameField.getText();
+    double price = Double.parseDouble(priceField.getText());
+    int calories = Integer.parseInt(caloriesField.getText());
+    totalCost[0] += price;
+    totalCostLabel.setText("Total Cost: " + totalCost[0]);
+});
 
-        Button addButton = new Button("Add Item");
-
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.add(nameLabel, 0, 0);
-        gridPane.add(nameField, 1, 0);
-        gridPane.add(priceLabel, 0, 1);
-        gridPane.add(priceField, 1, 1);
-        gridPane.add(caloriesLabel, 0, 2);
-        gridPane.add(caloriesField, 1, 2);
-        gridPane.add(addButton, 1, 3);
-
-        addButton.setOnAction(e -> {
-            String name = nameField.getText();
-            double price = Double.parseDouble(priceField.getText());
-            int calories = Integer.parseInt(caloriesField.getText());
-            // Save the item (store it in a data structure like an array or list)
-            System.out.println("Added: " + name + " | Price: " + price + " | Calories: " + calories);
-        });
-
-        Scene scene = new Scene(gridPane, 400, 200);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+checkBudgetButton.setOnAction(e -> {
+    double budget = Double.parseDouble(budgetField.getText());
+    if (totalCost[0] > budget) {
+        System.out.println("Over budget!");
+    } else {
+        System.out.println("Within budget.");
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-}
-
+});
